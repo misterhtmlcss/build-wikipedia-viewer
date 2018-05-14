@@ -11,7 +11,7 @@ let data // Json input data from search wikipedia search response
 let urlReady // fully formed URL goes here
 let sTerm = sInputBox.value
 
-search.addEventListener('click', function(e) {
+clear.addEventListener('click', function(e) {
   e.preventDefault();
   clearContainer();
 })
