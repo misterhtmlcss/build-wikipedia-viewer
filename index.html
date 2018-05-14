@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <link rel="stylesheet" href="css.css">
-   <title>Build A Wikipedia Viewer</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css.css">
+  <title>Build A Wikipedia Viewer</title>
 </head>
 <body>
-   <div class="center">
-      <div class="space">
-         <div class="search">Search Wikipedia</div>
-            <form id="searchForm">
-               <!-- Search Term Entered here -->
-               <input type="text" name="SearchField" id="sTerm">
-               <button id="btn-search">search</button>
-            </form>
-         </div>
+  <div class="center">
+    <div class="space">
+        <div class="search">Search Wikipedia</div>
+          <form id="searchForm">
+              <!-- Search Term Entered here -->
+              <input type="text" name="SearchField" id="sTerm">
+              <button id="btn-search">search</button>
+              <button id="btn-clear">clear</button>
+          </form>
+        </div>
+    <!-- Search Results Listed below -->
+    <div id="app">
+      <!-- <div class="boxes">
+      </div> -->
 
-      <!-- Search Results Listed below -->
-      <div id="app">
-         <p class="title">Test Title</p>
-         <p class="snippet">Test Snippet</p>
-      </div>
-   </div>
+      <!-- <ul class="container"></ul>-->
+      </ul>
+    </div>
+  </div>
 
-   <script src="index.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
