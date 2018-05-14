@@ -32,6 +32,13 @@ a, li, p, h1, .title, .snippet {
   height: 50vh;
 }
 
+.random {
+  display: inline;
+  background-color: aliceblue;
+  border: 1px black solid;
+  float: right;
+}
+
 li {
   list-style-type: none;
 }
