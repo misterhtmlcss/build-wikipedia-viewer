@@ -1,60 +1,70 @@
-/*
-Example 1: https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=car&origin=*
-https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=cars&origin=*
-Example 2 from FCC Forums: "https://en.wikipedia.org/w/api.php?action=opensearch&search=mcdonalds&format=json"
-FCC FUll Example:
-const baseUrl = https://en.wikipedia.org/w/api.php?action=opensearch&search=
-const sTerm = .....
-const corsUrl = &format=json&callback=wikiCallbackFunction&origin=*
-*/
 //const fetch = require('node-fetch')
-const url = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch="//+cors
+const url = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch="
 const cors = "&origin=*"
+const app = document.querySelector("#app")
+const search = document.getElementById("btn-search")
+const clear = document.getElementById("btn-clear")
+const dynaContent = document.createElement('input')
+const sInputBox = document.getElementById("sTerm")
 
-
-const app = document.getElementById('app')
 let data // Json input data from search wikipedia search response
 let urlReady // fully formed URL goes here
-let sTerm = document.getElementById("sTerm")
-let search = document.getElementById("btn-search")
+let sTerm = sInputBox.value
 
+search.addEventListener('click', function(e) {
+  e.preventDefault();
+  clearContainer();
+})
 
-search.addEventListener('click', urlBuilder)
+search.addEventListener('click', function(e) {
+  e.preventDefault();
+  urlBuilder();
+})
 
 function urlBuilder() {
-   //console.log (url+sTerm.value+cors)
-   urlReady =  url+sTerm.value+cors // build that url first; for brevity
-   apiReq(urlReady)
+  urlReady =  url+sTerm+cors // build that url first; for brevity
+  apiReq(urlReady)
 }
 
-function apiReq (x) {
-   fetch(x)
-      .then((res) => res.json())
-      .then((blob) => {
-         data = blob
-         console.log(data) // (tested) does the data load.
-         extractData(data) // function to work the data
-      })
+function apiReq (url) {
+  fetch(url, {
+    mode: 'cors',
+    })
+    .then((res) => res.json())
+    .then((blob) => {
+      //console.log(blob)
+      data = blob
+      extractData(data) // function to separate the data
+    })
+    .catch(function(error) {
+      console.log(`What went wrong ${error}`);
+    })
 }
 
-function extractData(x) {
-   //console.log(x)
-   const {query: { search }} = x
-   console.log(search.length, search) // (tested) destructor functions
-   search.forEach(datapoint => {
-      let { pageid, snippet, title } = datapoint
-      printData(pageid, snippet, title)
-      //console.log(pageid, snippet, title) // (tested) These variables have data.
-   })
+function extractData(fetchedData) {
+  const {query: { search }} = fetchedData
+  search.forEach(datapoint => {
+    const { pageid, snippet, title } = datapoint
+    /*
+    // For testing data delivery
+    console.log(datapoint.pageid, datapoint.title, datapoint.snippet)
+    */
+    createContainer(pageid, title, snippet)
+  })
 }
 
-
-function printData () {
-   app.innerHTML =
-   `
-   <p class="title">${title}</p>
-   <p class="snippet">${snippet}</p>
-   `
-   // Need to add page id still for a link, but will do that once the code works
+function createContainer(pageid, title, snippet){
+  let aTag = document.createElement('a')
+  let ulTag = document.createElement('ul')
+  let liTag = document.createElement('li')
+  let itemBox = `<li class="title">${title}</li><li class="snippet">${snippet}</li>`
+  aTag.setAttribute('href', `https://en.wikipedia.org/wiki/${pageid}`)
+  aTag.setAttribute('target', 'blank')
+  app.appendChild(aTag)
+  aTag.insertAdjacentElement('afterbegin', ulTag)
+  ulTag.innerHTML = itemBox
 }
 
+function clearContainer () {
+  app.innerHTML = " ";
+}
