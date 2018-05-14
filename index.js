@@ -5,11 +5,10 @@ const app = document.querySelector("#app")
 const search = document.getElementById("btn-search")
 const clear = document.getElementById("btn-clear")
 const dynaContent = document.createElement('input')
-const sInputBox = document.getElementById("sTerm")
+const sInputBox = document.getElementById("sInputBox")
 
 let data // Json input data from search wikipedia search response
 let urlReady // fully formed URL goes here
-let sTerm = sInputBox.value
 
 clear.addEventListener('click', function(e) {
   e.preventDefault();
@@ -22,7 +21,7 @@ search.addEventListener('click', function(e) {
 })
 
 function urlBuilder() {
-  urlReady =  url+sTerm+cors // build that url first; for brevity
+  urlReady =  url+sInputBox.value+cors // build that url first; for brevity
   apiReq(urlReady)
 }
 
